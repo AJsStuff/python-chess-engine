@@ -8,7 +8,7 @@ class Board:
     STARTING_POSITION_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
     def __init__(self):
-        self.rep = [[0 for file in range(8)] for rank in range(8)]
+        self.rep = [0] * 64
 
         self.color_to_move = "white"
 
@@ -25,16 +25,12 @@ class Board:
 
     def __str__(self) -> str:
         output = ""
-        for rank in self.rep:
-            output += f"{str(rank)}\n" 
+        for i in range(0, 64, 8):
+            x = i
+            output += f"{str(self.rep[x:x+8])}\n"
         
         return output
 
-    def place_piece(self, position: int, piece: Piece):
-        rank = math.floor(position / 8)
-        file = position % 8
-
-        self.rep[rank][file] = piece.id
     
     
     @classmethod
@@ -44,18 +40,18 @@ class Board:
         
 
         piece_dictionary = {
-            "k" : King("black"),
-            "K" : King("white"),
-            "q" : Queen("black"),
-            "Q" : Queen("white"),
-            "r" : Rook("black"),
-            "R" : Rook("white"),
-            "b" : Bishop("black"),
-            "B" : Bishop("white"),
-            "n" : Knight("black"),
-            "N" : Knight("white"),
-            "p" : Pawn("black"),
-            "P" : Pawn("white"),
+            "k" : Piece.King | Piece.Black,
+            "K" : Piece.King | Piece.White,
+            "q" : Piece.Queen | Piece.Black,
+            "Q" : Piece.Queen | Piece.White,
+            "r" : Piece.Rook | Piece.Black,
+            "R" : Piece.Rook | Piece.White,
+            "b" : Piece.Bishop | Piece.Black,
+            "B" : Piece.Bishop | Piece.White,
+            "n" : Piece.Knight | Piece.Black,
+            "N" : Piece.Knight | Piece.White,
+            "p" : Piece.Pawn | Piece.Black,
+            "P" : Piece.Pawn | Piece.White,
             
         }
 
@@ -74,7 +70,7 @@ class Board:
                 else:
                     print(rank * 8 + file)
                     print(f"rank: {rank}, file:{file}")
-                    board.place_piece(rank * 8 + file, piece_dictionary[char])
+                    board.rep[rank * 8 + file] = piece_dictionary[char]
                     file += 1
 
 
@@ -131,4 +127,4 @@ class Board:
         return cls().load_position_from_FEN(cls().STARTING_POSITION_FEN)
 
 
-        
+print(Board.load_starting_position())
