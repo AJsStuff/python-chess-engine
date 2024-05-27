@@ -1,4 +1,5 @@
 import pyglet as pg
+from piece import Piece
 from board import Board
 
 
@@ -12,6 +13,15 @@ def draw_board(board: Board):
     squares = []
 
     square_size : int = 75
+
+    pieces_dict = {
+        Piece.King : "king",
+        Piece.Queen : "queen",
+        Piece.Bishop : "bishop",
+        Piece.Knight : "knight",
+        Piece.Rook : "rook",
+        Piece.Pawn : "pawn",
+    }
 
 
     for i in range(8):
