@@ -55,23 +55,23 @@ class Board:
             
         }
 
-        rank, file = 0, 0
+        rank, file = 7, 7
 
         # Placing Pieces
         for char in fen[0]:
             if char == "/":
-                rank += 1
-                file = 0
+                rank -= 1
+                file = 7
             else:
                 print(char)
                 if char.isdigit():
                     print(f"added: {int(char)}")
-                    file += int(char)
+                    file -= int(char)
                 else:
                     print(rank * 8 + file)
                     print(f"rank: {rank}, file:{file}")
                     board.rep[rank * 8 + file] = piece_dictionary[char]
-                    file += 1
+                    file -= 1
 
 
         # Color to move
